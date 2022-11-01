@@ -143,7 +143,7 @@ function viewAllEmployees() {
 
     )
 }
-// function addEmployee() 
-// function updateEmployeeRole()
+// function addEmployee() still not completed 
+// function updateEmployeeRole() still not completed 
 
 showList();
