@@ -125,9 +125,9 @@ function viewAllEmployees() {
     concat(employee2.first_name,"  ",employee2.last_name) as Manager_Name 
     from employee_tracker.employee as employee 
     left join employee_tracker.employee as employee2 
-    on employee2.id=employee.manager_id 
+    on employee2.id = employee.manager_id 
     left join employee_tracker.Role as role
-    on employee.role_id=role.id 
+    on employee.role_id = role.id 
     left join employee_tracker.department as department 
     on department.id = role.department_id`;
 
