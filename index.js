@@ -43,14 +43,14 @@ function showList() {
                     break;
 
                 case "View all Departments":
-                    showAllDepartments();
+                    viewAllDepartments();
                     break;
                 case "Add Department":
                     addDepartment();
                     break;
 
                 case "View all Roles":
-                    showAllRoles();
+                    viewAllRoles();
                     break;
 
                 case "Add Role":
@@ -64,7 +64,7 @@ function showList() {
             }
         })
 }
-function showAllDepartments() {
+function viewAllDepartments() {
     connection.query(
         'SELECT * FROM Department', (err, res) => {
             if (err) {
@@ -95,7 +95,7 @@ function addDepartment() {
     });
 }
 
-function showAllRoles() {
+function viewAllRoles() {
     connection.query(
         `select role.title as role_title, 
         role.salary as Salary , 
@@ -113,7 +113,7 @@ function showAllRoles() {
     )
 }
 
-// function addRoles()
+// function addRole()
 
 function viewAllEmployees() {
     const sql = 
