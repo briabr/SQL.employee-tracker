@@ -43,6 +43,5 @@ THEN I am prompted to select an employee to update and their new role and this i
 https://github.com/briabr/SQL.employee-tracker
 
 ## Walkthrough Video 
-https://drive.google.com/file/d/16mt6EE-octjuhLLi7yygbrve8ivJwbkp/view
-
+https://drive.google.com/file/d/1WwXAeoOIUxGYNVytuth9sLgwxs46pDpf/view
 
