@@ -94,6 +94,90 @@ function addDepartment() {
         });
     });
 }
+function addRole() {
+    connection.query('select * from department',(err,result) =>{
+        let deptID = result.map(department => {
+            return department.id
+        })
+        inquirer.prompt([
+
+            {
+                type: 'input',
+                name: 'role_name',
+                message: 'Please add a role name:'
+            },
+            {
+                type: 'input',
+                name: 'salary',
+                message: 'Please add a salary:'
+            },
+            {
+                type: 'list',
+                name: 'department_id',
+                message: 'Please add a department id:',
+                choices: deptID
+            },
+    
+        ]).then(answer => {
+            console.log(answer);
+            connection.query('INSERT INTO role SET ?', {title: answer.role_name, salary: answer.salary, department_id: answer.department_id}, (err, res) => {
+                if (err) throw err;
+                console.log('new role was added')
+                showList();
+            });
+        });
+
+    })
+    }
+    function addEmployee() {
+        connection.query('select * from employee',(err,result) =>{
+            let roleID = result.map(employee => {
+                return  employee.role_id
+            })
+        
+            let managerID = result.map(employee => {
+                return  employee.manager_id
+
+            }).filter(emp => emp != null)
+            console.log(managerID)
+            inquirer.prompt([
+
+                {
+                    type: 'input',
+                    name: 'first_name',
+                    message: 'Please add a first name:'
+                },
+                {
+                    type: 'input',
+                    name: 'last_name',
+                    message: 'Please add a last name:'
+                },
+                {
+                    type: 'list',
+                    name: 'role_id',
+                    message: 'Please add employee role_id:',
+                    choices: roleID
+                },
+                {
+                    type: 'list',
+                    name: 'manager_id',
+                    message: 'Please add employee manager_id:',
+                    choices: managerID
+
+                }
+        
+            ]).then(answer => {
+                console.log(answer);
+                connection.query('INSERT INTO employee SET?', { first_name: answer.first_name, last_name: answer.last_name, role_id:answer.role_id,manager_id:answer.manager_id}, (err, res) => {
+                    if (err) throw err;
+                    console.log('new employee was added')
+                    showList();
+                });
+            });
+
+
+        
+        })};
 
 function viewAllRoles() {
     connection.query(
@@ -112,8 +196,6 @@ function viewAllRoles() {
         }
     )
 }
-
-// function addRole()
 
 function viewAllEmployees() {
     const sql = 
@@ -143,7 +225,51 @@ function viewAllEmployees() {
 
     )
 }
-// function addEmployee() still not completed 
-// function updateEmployeeRole() still not completed 
+function updateEmployeeRole() {
+    connection.query('select * from employee',(err,result) =>{
+        let name = result.map(employee => {
+            return employee.first_name
+        })
+        let managerID = result.map(employee => {
+            return  employee.manager_id
+        }).filter(emp => emp != null)
+
+        connection.query('select * from role', (err,role_result) => {
+            let roleId = role_result.map(role => {
+                return role.id
+            })
+            inquirer.prompt([
+
+                {
+                    type: 'list',
+                    name: 'first_name',
+                    message: 'Please select an employee :',
+                    choices: name
+                },
+                {
+                    type: 'list',
+                    name: 'role_id',
+                    message: 'Please add a an employee role:',
+                    choices : roleId
+                },
+                {
+                    type: 'list',
+                    name: 'manager_id',
+                    message: 'Please add a manger id:',
+                    choices: managerID
+                },
+        
+            ]).then(answer => {
+                console.log(answer);
+                connection.query(`update employee SET role_id = ${answer.role_id}, manager_id = ${answer.manager_id} where first_name = '${answer.first_name}'`, (err, res) => {
+                    if (err) throw err;
+                    console.log('new role was added')
+                    showList();
+                });
+        })
+    })
+       
+});
+}
 
 showList();
